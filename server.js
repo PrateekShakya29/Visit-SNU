@@ -257,7 +257,7 @@ cron.schedule('0 0 0 * * *', () => {
         //               from: process.env.GMAIL_ID,
         //               to: email,
         //               subject: 'Status Update',
-        //               text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + name + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
+        //               text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + name + ' ) and password to login. Here is the link of the website: https://visit-snu.netlify.app/. Your QR code is attached herewith, you can see the same on your profile',
         //               attachDataUrls: true,
         //               attachments: [{
         //                 filename: "qrcode.png",
@@ -265,7 +265,7 @@ cron.schedule('0 0 0 * * *', () => {
         //               }]
         //               // html:'<b>Thanks for visiting the building.</b>'+
         //               //      'Your username has been deactivated successfully<br>'+
-        //               //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+        //               //      'You can no logner use your username and password to login to <a href="https://visit-snu.netlify.app/" target="_blank">VMS</a>'
         //             };
         //
         //             transporter.sendMail(mailOptions, function(error, info) {
@@ -310,11 +310,11 @@ cron.schedule('0 0 0 * * *', () => {
                       from: process.env.GMAIL_ID,
                       to: email,
                       subject: 'Status Update',
-                      text: 'Your Id has been deactivated because of no visit. You can no longer login to your profile. Kindly Register as a new visiter to get a new Visiit Link to VMS is: https://vms-sasy.herokuapp.com/',
+                      text: 'Your Id has been deactivated because of no visit. You can no longer login to your profile. Kindly Register as a new visiter to get a new Visiit Link to VMS is: https://visit-snu.netlify.app/',
 
                       // html:'<b>Thanks for visiting the building.</b>'+
                       //      'Your username has been deactivated successfully<br>'+
-                      //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+                      //      'You can no logner use your username and password to login to <a href="https://visit-snu.netlify.app/" target="_blank">VMS</a>'
                     };
 
                     transporter.sendMail(mailOptions, function (error, info) {
@@ -448,7 +448,7 @@ app.post("/signup", function (req, res) {
               from: process.env.GMAIL_ID,
               to: vEmail,
               subject: 'Registration on VMS',
-              text: 'Thanks for registration. You have successfully registered. Your username is: ' + vId + '. Your current request to visit is pending. We will keep you updated. You can also check your status at your profile. You can use your username and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/\n Below is your QR code. You will need to scan this QR to have access to the building once your request is approved and status is set as "active"',
+              text: 'Thanks for registration. You have successfully registered. Your username is: ' + vId + '. Your current request to visit is pending. We will keep you updated. You can also check your status at your profile. You can use your username and password to login. Here is the link of the website: https://visit-snu.netlify.app/\n Below is your QR code. You will need to scan this QR to have access to the building once your request is approved and status is set as "active"',
               attachDataUrls: true,
               attachments: [{
                 filename: "qrcode.png",

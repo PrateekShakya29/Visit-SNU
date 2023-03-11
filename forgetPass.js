@@ -40,7 +40,7 @@ module.exports = function (app) {
                     pass: process.env.GMAIL_PASS
                   }
                 });
-                var link = "https://vms-sasy.herokuapp.com/reset/" + token;
+                var link = "https://visit-snu.netlify.app/reset/" + token;
                 var mailOptions = {
                   from: 'visitsnu123@gmail.com',
                   to: user.email,

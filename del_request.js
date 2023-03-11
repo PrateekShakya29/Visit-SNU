@@ -94,11 +94,11 @@ module.exports = function (app) {
               from: process.env.GMAIL_ID,
               to: user.email,
               subject: 'Status Update',
-              text: 'Your Visit has been declined!!. Your status has been set as Inactive.\nKindly contact the admin (vms.sasy@gmail.com) for more details.\nYour username is: ' + username + '. You can no longer login to your profile. Link to VMS is: https://vms-sasy.herokuapp.com/',
+              text: 'Your Visit has been declined!!. Your status has been set as Inactive.\nKindly contact the admin (vms.sasy@gmail.com) for more details.\nYour username is: ' + username + '. You can no longer login to your profile. Link to VMS is: https://visit-snu.netlify.app/',
               attachDataUrls: true,
               // html:'<b>Thanks for visiting the building.</b>'+
               //      'Your username has been deactivated successfully<br>'+
-              //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+              //      'You can no logner use your username and password to login to <a href="https://visit-snu.netlify.app/" target="_blank">VMS</a>'
             };
 
             transporter.sendMail(mailOptions, function (error, info) {

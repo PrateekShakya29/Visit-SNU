@@ -86,11 +86,11 @@ module.exports = function (app) {
               from: process.env.GMAIL_ID,
               to: user.email,
               subject: 'Thanks for your Visit',
-              text: 'Thanks for visiting the building. Your username has been deactivated successfully\nYou can no longer use your username and password to login to your profile.\nVMS: https://vms-sasy.herokuapp.com/',
+              text: 'Thanks for visiting the building. Your username has been deactivated successfully\nYou can no longer use your username and password to login to your profile.\nVMS: https://visit-snu.netlify.app/',
               attachDataUrls: true,
               // html:'<b>Thanks for visiting the building.</b>'+
               //      'Your username has been deactivated successfully<br>'+
-              //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+              //      'You can no logner use your username and password to login to <a href="https://visit-snu.netlify.app/" target="_blank">VMS</a>'
             };
 
             transporter.sendMail(mailOptions, function (error, info) {

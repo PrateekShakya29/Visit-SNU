@@ -39,11 +39,11 @@ module.exports = function (app) {
               from: process.env.GMAIL_ID,
               to: user.email,
               subject: 'Status Update',
-              text: 'Your Visit has been Confirmed on your requested Date!!.\nYou can check your profile for more details. You can use your username ( ' + username + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/',
+              text: 'Your Visit has been Confirmed on your requested Date!!.\nYou can check your profile for more details. You can use your username ( ' + username + ' ) and password to login. Here is the link of the website: https://visit-snu.netlify.app/',
               attachDataUrls: true,
               // html:'<b>Thanks for visiting the building.</b>'+
               //      'Your username has been deactivated successfully<br>'+
-              //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+              //      'You can no logner use your username and password to login to <a href="https://visit-snu.netlify.app/" target="_blank">VMS</a>'
             };
 
             transporter.sendMail(mailOptions, function (error, info) {

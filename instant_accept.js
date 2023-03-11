@@ -81,7 +81,7 @@ module.exports = function (app) {
                 from: process.env.GMAIL_ID,
                 to: user.email,
                 subject: 'Status Update',
-                text: 'Your Visit has been Confirmed!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + username + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
+                text: 'Your Visit has been Confirmed!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + username + ' ) and password to login. Here is the link of the website: https://visit-snu.netlify.app/. Your QR code is attached herewith, you can see the same on your profile',
                 attachDataUrls: true,
                 attachments: [
                   {
