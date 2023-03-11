@@ -4,17 +4,17 @@ const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
 const nodemailer = require('nodemailer');
 var QRCode = require('qrcode')
-module.exports = function(app) {
+module.exports = function (app) {
 
 
   const User = mongoose.model("User");
 
 
-  app.get("/checkin", function(req, res) {
+  app.get("/checkin", function (req, res) {
     res.redirect("/Profile");
   });
 
-  app.post("/checkin", function(req, res) {
+  app.post("/checkin", function (req, res) {
     var username = req.body.username;
     // console.log(username);
     // console.log(req.user.name);
@@ -23,7 +23,7 @@ module.exports = function(app) {
     // console.log(username);
     User.findOne({
       username: username
-    }, function(err, user) {
+    }, function (err, user) {
       if (err) {
         console.log(err)
       } else {
@@ -45,70 +45,70 @@ module.exports = function(app) {
 
           var time = new Date(Date.now());
           var min = time.getMinutes();
-          var sec= time.getSeconds();
-          var hr=time.getHours();
-          var ss="";
-          if(hr==0){
-            hr=12;
-            ss="AM";
+          var sec = time.getSeconds();
+          var hr = time.getHours();
+          var ss = "";
+          if (hr == 0) {
+            hr = 12;
+            ss = "AM";
           }
-          else if(hr<12){
+          else if (hr < 12) {
             // hr=12;
-            ss="AM";
+            ss = "AM";
           }
-          else if(hr==12){
-            ss="PM";
+          else if (hr == 12) {
+            ss = "PM";
           }
-          else if(hr>12){
-            hr=hr-12;
-            ss="PM";
+          else if (hr > 12) {
+            hr = hr - 12;
+            ss = "PM";
           }
-          time= hr+":"+min+":"+sec+" "+ss;
+          time = hr + ":" + min + ":" + sec + " " + ss;
           console.log(time);
 
-          today=today+" "+time;
+          today = today + " " + time;
           console.log(today);
           User.updateOne({
             username: req.body.username
           }, {
             status: "active",
             inDate: today
-          }, function() {
+          }, function () {
 
 
-            QRCode.toDataURL(username, function(err, img) {
-            var transporter = nodemailer.createTransport({
-              service: 'gmail',
-              auth: {
-                user: process.env.GMAIL_ID,
-                pass: process.env.GMAIL_PASS
-              }
-            });
-            var mailOptions = {
-              from: process.env.GMAIL_ID,
-              to: user.email,
-              subject: 'Status Update',
-              text: 'Welcome!! Your status has been changed to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( '+username+' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
-              attachDataUrls: true,
-              attachments: [{
-                filename: "qrcode.png",
-                path: img,
-              }]
+            QRCode.toDataURL(username, function (err, img) {
+              var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: process.env.GMAIL_ID,
+                  pass: process.env.GMAIL_PASS
+                }
+              });
+              var mailOptions = {
+                from: process.env.GMAIL_ID,
+                to: user.email,
+                subject: 'Status Update',
+                text: 'Welcome!! Your status has been changed to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + username + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
+                attachDataUrls: true,
+                attachments: [{
+                  filename: "qrcode.png",
+                  path: img,
+                }]
               };
 
-            transporter.sendMail(mailOptions, function(error, info) {
-              if (error) {
-                console.log(error);
-              } else {
-                console.log('Email sent: ' + info.response);
-              }
-            });
-          })
+              transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
+            })
             User.find({
               username: {
                 $regex: /^v/
               }
-            }, function(err, check) {
+            }, function (err, check) {
               if (err)
                 console.log(err);
               else {
@@ -146,7 +146,7 @@ module.exports = function(app) {
             username: {
               $regex: /^v/
             }
-          }, function(err, check) {
+          }, function (err, check) {
             if (err)
               console.log(err);
             else {

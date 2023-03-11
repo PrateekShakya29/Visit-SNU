@@ -1,5 +1,3 @@
-//jshint esversion:6
-
 require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -35,7 +33,7 @@ mongoose.connect("mongodb://localhost:27017/todo", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-// mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect(process.env.DATABASE_URL,{useNewUrlParser:true, useUnifiedTopology: true });
 
 mongoose.set("useCreateIndex", true);
 const connection = mongoose.connection;
@@ -61,7 +59,8 @@ const usersSchema = new mongoose.Schema({
   inDate: String,
   outDate: String,
   reqDate: String,
-  url: String
+  url: String,
+  isAdmin: { type: Boolean, default: false }
 });
 
 usersSchema.plugin(passportLocalMongoose);
@@ -120,7 +119,7 @@ async function findVisitor() {
   })
 };
 //
-User.register({ username: "ayash123", password: "abc" }, "ysk", (err, user) => {
+User.register({ username: "ayash123" }, "ysk", (err, user) => {
   if (err) {
     console.log(err);
   }
@@ -221,23 +220,76 @@ cron.schedule('0 0 0 * * *', () => {
         }
 
         valid = yyyy1 + '-' + mm1 + '-' + dd1;
-        console.log(today);
+        // console.log(today);
 
-        today.setHours(0, 0, 0, 0);
-
-
+        // today.setHours(0, 0, 0, 0);
+        //
+        //
+        // if (check.length > 0) {
+        //   for (var i = 0; i < check.length; i++) {
+        //
+        //     console.log(today)
+        //     var compare = check[i].reqDate;
+        //     if (compare == today) {
+        //       var name = check[i].username;
+        //       var email = check[i].email;
+        //       User.updateOne({
+        //         username: check[i].username
+        //       }, {
+        //         status: "active"
+        //       }, function(err) {
+        //         if (err)
+        //           console.log(err);
+        //         else {
+        //           console.log(name);
+        //           console.log(email);
+        //
+        //           QRCode.toDataURL(name, function(err, img) {
+        //             var transporter = nodemailer.createTransport({
+        //               service: 'gmail',
+        //               auth: {
+        //                 user: process.env.GMAIL_ID,
+        //                 pass: process.env.GMAIL_PASS
+        //               }
+        //             });
+        //
+        //             var mailOptions = {
+        //               from: process.env.GMAIL_ID,
+        //               to: email,
+        //               subject: 'Status Update',
+        //               text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + name + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
+        //               attachDataUrls: true,
+        //               attachments: [{
+        //                 filename: "qrcode.png",
+        //                 path: img,
+        //               }]
+        //               // html:'<b>Thanks for visiting the building.</b>'+
+        //               //      'Your username has been deactivated successfully<br>'+
+        //               //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
+        //             };
+        //
+        //             transporter.sendMail(mailOptions, function(error, info) {
+        //               if (error) {
+        //                 console.log(error);
+        //               } else {
+        //                 console.log('Email sent: ' + info.response);
+        //               }
+        //             });
+        //
+        //           })
+        //         }
+        //       })
+        //     }
         if (check.length > 0) {
           for (var i = 0; i < check.length; i++) {
-
-            console.log(today)
             var compare = check[i].reqDate;
-            if (compare == today) {
+            if (compare == valid && check[i].inDate == "") {
               var name = check[i].username;
               var email = check[i].email;
               User.updateOne({
                 username: check[i].username
               }, {
-                status: "active"
+                status: "Inactive"
               }, function (err) {
                 if (err)
                   console.log(err);
@@ -258,12 +310,8 @@ cron.schedule('0 0 0 * * *', () => {
                       from: process.env.GMAIL_ID,
                       to: email,
                       subject: 'Status Update',
-                      text: 'Your Visit has been approved!!. Your status has been set to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + name + ' ) and password to login. Here is the link of the website: https://vms-sasy.herokuapp.com/. Your QR code is attached herewith, you can see the same on your profile',
-                      attachDataUrls: true,
-                      attachments: [{
-                        filename: "qrcode.png",
-                        path: img,
-                      }]
+                      text: 'Your Id has been deactivated because of no visit. You can no longer login to your profile. Kindly Register as a new visiter to get a new Visiit Link to VMS is: https://vms-sasy.herokuapp.com/',
+
                       // html:'<b>Thanks for visiting the building.</b>'+
                       //      'Your username has been deactivated successfully<br>'+
                       //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
@@ -281,60 +329,11 @@ cron.schedule('0 0 0 * * *', () => {
                 }
               })
             }
-            if (check.length > 0) {
-              for (var i = 0; i < check.length; i++) {
-                var compare = check[i].reqDate;
-                if (compare == valid && check[i].inDate == "") {
-                  var name = check[i].username;
-                  var email = check[i].email;
-                  User.updateOne({
-                    username: check[i].username
-                  }, {
-                    status: "Inactive"
-                  }, function (err) {
-                    if (err)
-                      console.log(err);
-                    else {
-                      console.log(name);
-                      console.log(email);
-
-                      QRCode.toDataURL(name, function (err, img) {
-                        var transporter = nodemailer.createTransport({
-                          service: 'gmail',
-                          auth: {
-                            user: process.env.GMAIL_ID,
-                            pass: process.env.GMAIL_PASS
-                          }
-                        });
-
-                        var mailOptions = {
-                          from: process.env.GMAIL_ID,
-                          to: email,
-                          subject: 'Status Update',
-                          text: 'Your Id has been deactivated because of no visit. You can no longer login to your profile. Kindly Register as a new visiter to get a new Visiit Link to VMS is: https://vms-sasy.herokuapp.com/',
-
-                          // html:'<b>Thanks for visiting the building.</b>'+
-                          //      'Your username has been deactivated successfully<br>'+
-                          //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
-                        };
-
-                        transporter.sendMail(mailOptions, function (error, info) {
-                          if (error) {
-                            console.log(error);
-                          } else {
-                            console.log('Email sent: ' + info.response);
-                          }
-                        });
-
-                      })
-                    }
-                  })
-                }
-              }
-            };
-            return;
           }
-        })
+        };
+        return;
+      }
+    })
   };
 }, {
   scheduled: true,

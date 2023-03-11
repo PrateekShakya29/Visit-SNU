@@ -4,17 +4,17 @@ const passport = require('passport');
 const passportLocalMongoose = require('passport-local-mongoose');
 const nodemailer = require('nodemailer');
 var QRCode = require('qrcode')
-module.exports = function(app) {
+module.exports = function (app) {
 
 
   const User = mongoose.model("User");
 
 
-  app.get("/del_visitor", function(req, res) {
+  app.get("/del_visitor", function (req, res) {
     res.redirect("/Profile");
   });
 
-  app.post("/del_visitor", function(req, res) {
+  app.post("/del_visitor", function (req, res) {
     var username = req.body.username;
     console.log(username);
     console.log(req.user.name);
@@ -23,7 +23,7 @@ module.exports = function(app) {
     // console.log(username);
     User.findOne({
       username: username
-    }, function(err, user) {
+    }, function (err, user) {
       if (err) {
         console.log(err)
       } else {
@@ -45,28 +45,28 @@ module.exports = function(app) {
 
           var time = new Date(Date.now());
           var min = time.getMinutes();
-          var sec= time.getSeconds();
-          var hr=time.getHours();
-          var ss="";
-          if(hr==0){
-            hr=12;
-            ss="AM";
+          var sec = time.getSeconds();
+          var hr = time.getHours();
+          var ss = "";
+          if (hr == 0) {
+            hr = 12;
+            ss = "AM";
           }
-          else if(hr<12){
+          else if (hr < 12) {
             // hr=12;
-            ss="AM";
+            ss = "AM";
           }
-          else if(hr==12){
-            ss="PM";
+          else if (hr == 12) {
+            ss = "PM";
           }
-          else if(hr>12){
-            hr=hr-12;
-            ss="PM";
+          else if (hr > 12) {
+            hr = hr - 12;
+            ss = "PM";
           }
-          time= hr+":"+min+":"+sec+" "+ss;
+          time = hr + ":" + min + ":" + sec + " " + ss;
           console.log(time);
 
-          today=today+" "+time;
+          today = today + " " + time;
           console.log(today);
 
           User.updateOne({
@@ -74,7 +74,7 @@ module.exports = function(app) {
           }, {
             status: "Inactive",
             outDate: today
-          }, function() {
+          }, function () {
             var transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
@@ -93,7 +93,7 @@ module.exports = function(app) {
               //      'You can no logner use your username and password to login to <a href="https://vms-sasy.herokuapp.com/" target="_blank">VMS</a>'
             };
 
-            transporter.sendMail(mailOptions, function(error, info) {
+            transporter.sendMail(mailOptions, function (error, info) {
               if (error) {
                 console.log(error);
               } else {
@@ -104,7 +104,7 @@ module.exports = function(app) {
               username: {
                 $regex: /^v/
               }
-            }, function(err, check) {
+            }, function (err, check) {
               if (err)
                 console.log(err);
               else {
@@ -142,7 +142,7 @@ module.exports = function(app) {
             username: {
               $regex: /^v/
             }
-          }, function(err, check) {
+          }, function (err, check) {
             if (err)
               console.log(err);
             else {
