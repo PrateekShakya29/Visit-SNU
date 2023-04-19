@@ -1,3 +1,4 @@
+// comment
 require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -11,6 +12,7 @@ const crypto = require('crypto');
 var flash = require('express-flash');
 var QRCode = require('qrcode')
 var cron = require('node-cron');
+const SMTPConnection = require('nodemailer/lib/smtp-connection');
 const app = express();
 
 app.use(express.static("public"));
@@ -66,6 +68,9 @@ const usersSchema = new mongoose.Schema({
 usersSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", usersSchema);
+// const accountSid = config.twilio.accountSid;
+// const authToken = config.twilio.authToken;
+// const client = require("twilio")(accountSid, authToken);
 
 passport.use(User.createStrategy());
 
@@ -299,11 +304,14 @@ cron.schedule('0 0 0 * * *', () => {
 
                   QRCode.toDataURL(name, function (err, img) {
                     var transporter = nodemailer.createTransport({
-                      service: 'gmail',
+                      host: config.email_setting.host,
+                      port: 587,
+                      secure: false,
+                      requireTLS: true,
                       auth: {
-                        user: process.env.GMAIL_ID,
-                        pass: process.env.GMAIL_PASS
-                      }
+                        user: config.email_setting.email,
+                        pass: config.email_setting.password,
+                      },
                     });
 
                     var mailOptions = {
@@ -339,6 +347,8 @@ cron.schedule('0 0 0 * * *', () => {
   scheduled: true,
   timezone: "Asia/Kolkata"
 });
+
+
 
 require('./login')(app);
 

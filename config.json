@@ -1,0 +1,19 @@
+{
+    "host": {
+        "name": "Pearson Spector Litt",
+        "email": "prateekshakya01@gmail.com",
+        "address": "Shiv Nadar University",
+        "mobile_number": "+917838411342"
+    },
+    "twilio": {
+        "accountSid": "AC89445ee28c7ebe350d6fddc38faeec61",
+        "authToken": "9d7a9b6683f01cc9628c53429507ab88",
+        "from_number": "+18583300674",
+        "to_number": "+917838411342"
+    },
+    "email_setting": {
+        "email": "prateekshakya01@gmail.com",
+        "password": "zpycfckpfjbwmvft",
+        "host": "smtp.gmail.com"
+    }
+}
