@@ -489,13 +489,16 @@ app.post("/signup", function (req, res) {
             attachDataUrls: true,
 
           };
+          let mobile_num = '+91' + req.body.mobile;
           client.messages
             .create({
-              to: '+917838411342',
+              to: mobile_num,
               from: '+18583300674',
-              body: 'CHECKING',
+              body: 'Thanks for registration. You have successfully registered. Your username is: ' + vId + '. Your current request to visit is pending. We will keep you updated. You can also check your status at your profile. You can use your username and password to login. Here is the link of the website: https://visit-snu.netlify.app/\n Below is your QR code. You will need to scan this QR to have access to the building once your request is approved and status is set as "active"',
             })
             .then(message => console.log(message.sid));
+          // console.log(mobile_num);
+          // res.send(mobile_num);
 
           transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
