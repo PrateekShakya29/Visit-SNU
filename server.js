@@ -71,6 +71,12 @@ const User = new mongoose.model("User", usersSchema);
 // const accountSid = config.twilio.accountSid;
 // const authToken = config.twilio.authToken;
 // const client = require("twilio")(accountSid, authToken);
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+
+// require the Twilio module and create a REST client
+const client = require('twilio')(accountSid, authToken);
+
 
 passport.use(User.createStrategy());
 
@@ -483,6 +489,13 @@ app.post("/signup", function (req, res) {
             attachDataUrls: true,
 
           };
+          client.messages
+            .create({
+              to: '+917838411342',
+              from: '+18583300674',
+              body: 'CHECKING',
+            })
+            .then(message => console.log(message.sid));
 
           transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
