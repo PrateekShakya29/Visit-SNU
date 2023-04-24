@@ -330,6 +330,14 @@ cron.schedule('0 0 0 * * *', () => {
                       //      'Your username has been deactivated successfully<br>'+
                       //      'You can no logner use your username and password to login to <a href="https://visit-snu.netlify.app/" target="_blank">VMS</a>'
                     };
+                    let mobile_num = '+91' + req.body.mobile;
+                    client.messages
+                      .create({
+                        to: mobile_num,
+                        from: '+18583300674',
+                        body: 'Your Id has been deactivated because of no visit. You can no longer login to your profile. Kindly Register as a new visiter to get a new Visiit Link to VMS is: https://visit-snu.netlify.app/',
+                      })
+                      .then(message => console.log(message.sid));
 
                     transporter.sendMail(mailOptions, function (error, info) {
                       if (error) {
@@ -471,6 +479,14 @@ app.post("/signup", function (req, res) {
                 path: img,
               }]
             };
+            let mobile_num = '+91' + req.body.mobile;
+            client.messages
+              .create({
+                to: mobile_num,
+                from: '+18583300674',
+                body: 'Thanks for registration. You have successfully registered. Your username is: ' + vId + '. Your current request to visit is pending. We will keep you updated. You can also check your status at your profile. You can use your username and password to login. Here is the link of the website: https://visit-snu.netlify.app/\n Below is your QR code. You will need to scan this QR to have access to the building once your request is approved and status is set as "active"',
+              })
+              .then(message => console.log(message.sid));
 
             transporter.sendMail(mailOptions, function (error, info) {
               if (error) {
@@ -489,12 +505,12 @@ app.post("/signup", function (req, res) {
             attachDataUrls: true,
 
           };
-          let mobile_num = '+91' + req.body.mobile;
+          // let mobile_num = '+91' + req.body.mobile;
           client.messages
             .create({
-              to: mobile_num,
+              to: '+917838411342',
               from: '+18583300674',
-              body: 'Thanks for registration. You have successfully registered. Your username is: ' + vId + '. Your current request to visit is pending. We will keep you updated. You can also check your status at your profile. You can use your username and password to login. Here is the link of the website: https://visit-snu.netlify.app/\n Below is your QR code. You will need to scan this QR to have access to the building once your request is approved and status is set as "active"',
+              body: 'A new visit request has been made under the user id: ' + vId + '. Kindly verify the request and update the same from the Pending Requests section of your profile',
             })
             .then(message => console.log(message.sid));
           // console.log(mobile_num);

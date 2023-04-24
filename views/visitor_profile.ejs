@@ -78,8 +78,9 @@
     <%= Visitor_Name %>
   </h1>
   <div  class="">
-    <img  style="text-align: right;  margin: auto; margin-right: 10px; padding: 20px; height: 200px; width:200px; display:block -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);"src="<%= visitor.url %>" alt="">
+    <img  style="text-align: right;  margin: auto; margin-right: 10px; padding: 20px; height: 200px; width:200px; display:block -webkit-transform: scaleX(-1);transform: scaleX(-1);"src="<%= visitor.url %>" alt="">
+    <!-- <img style="text-align: right; margin: auto; margin-right: 10px; padding: 20px; height: 200px; width: 200px; display: block; -webkit-transform: scaleX(-1); transform: scaleX(-1);" src="https://example.com/image.jpg" alt=""> -->
+
   </div>
 
   <h3 style="text-align: center;  margin: auto;padding: 10px; ">Status: <%= visitor.status %></h3>
@@ -133,16 +134,24 @@
         <label for="requestedDate">requested date</label>
         <input name="requestedDate" type="text" class="form-control" id="reqDate" value="<%= visitor.reqDate %>">
       </div>
-
       <div class="form-group">
+        <label for="indate">entry time</label>
+        <input name="indate" type="text" class="form-control" id="indate" value="<%= visitor.inDate %>">
+      </div>
+      <div class="form-group">
+        <label for="outdate">exit time</label>
+        <input name="outdate" type="text" class="form-control" id="outdate" value="<%= visitor.outDate %>">
+      </div>
+
+      <!-- <div class="form-group">
         <label for="exampleInputEmail1">duration of stay</label>
 
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="visiting time" value="<%= visitor.inDate %>" style="color: black;" readonly/>
+          <input type="text" class="form-control" placeholder="visiting time" value="<%= visitor.inDate %>" style="color: black;" />
           <span class="input-group-addon">-</span>
-          <input type="text" class="form-control" placeholder="leaving time"  value="<%= visitor.outDate %>" style="color: black;" readonly/>
+          <input type="text" class="form-control" placeholder="leaving time"  value="<%= visitor.outDate %>" style="color: black;" />
         </div>
-
+      </div> -->
 
     </form>
 
@@ -197,7 +206,7 @@
         <p>owner: visit_snu</p>
       </section>
     </div>
-    <div class="text-right">&copy; Copyright visit_snu 2023. All rights reserved</div>
+    <div class="text-right">&copy; Copyright visit_snu 2020. All rights reserved</div>
   </div>
 </footer>
 

@@ -30,6 +30,8 @@ module.exports = function (app) {
               "password": "",
               "status": "",
               "forgetPass": undefined,
+              "outDate": undefined,
+              "inDate": undefined,
             };
 
             res.render("admin_profile.ejs", { Admin_Name: req.user.name, details: check, visitor: user });

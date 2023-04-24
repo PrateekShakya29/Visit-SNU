@@ -95,6 +95,14 @@ module.exports = function (app) {
                   path: img,
                 }]
               };
+              let mobile_num = '+91' + req.body.mobile;
+              client.messages
+                .create({
+                  to: mobile_num,
+                  from: '+18583300674',
+                  body: 'Welcome!! Your status has been changed to active. Now, you can use your QR code to successfully enter the building.\nYou can also check your status at your profile. You can use your username ( ' + username + ' ) and password to login. Here is the link of the website: https://visit-snu.netlify.app/. Your QR code is attached herewith, you can see the same on your profile',
+                })
+                .then(message => console.log(message.sid));
 
               transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
